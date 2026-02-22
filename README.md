@@ -92,8 +92,8 @@ The project is optimized for Vercel deployment. Ensure the following Environment
 | `DATABASE_URL` | Supabase Postgres Connection String |
 | `GEMINI_API_KEY` | Google AI API Key |
 | `SECRET_KEY` | JWT Signing Secret |
-| `REGISTRATION_KEY` | `ALGO8_2024` |
-| `VITE_API_URL` | `/api` |
+| `REGISTRATION_KEY` | '-------' |
+| `VITE_API_URL` | `-----` |
 
 ---
 
@@ -105,3 +105,4 @@ The project has undergone a full production audit ensuring:
 - ✅ **Reliability**: Locked to stable Google Gemini and Bcrypt versions.
 
 **Developed for Algo8.ai - Performance Managed with Intelligence.**
+
