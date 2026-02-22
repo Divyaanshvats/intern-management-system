@@ -49,13 +49,11 @@ function ManagerDashboard() {
         }
         setLoading(true);
         try {
-            await api.post("/create-evaluation", null, {
-                params: {
-                    intern_id: internId,
-                    rating: rating,
-                    manager_comment: comment,
-                    months_worked: monthsWorked,
-                },
+            await api.post("/create-evaluation", {
+                intern_id: internId,
+                rating: rating,
+                manager_comment: comment,
+                months_worked: monthsWorked,
             });
 
             showToast("Evaluation Created Successfully", "success");

@@ -76,12 +76,10 @@ function HRDashboard() {
         }
         setLoading(true);
         try {
-            await api.post("/submit-hr-review", null, {
-                params: {
-                    evaluation_id: evaluationId,
-                    comment: hrComment,
-                    rating_adjustment: ratingAdjustment,
-                },
+            await api.post("/submit-hr-review", {
+                evaluation_id: evaluationId,
+                comment: hrComment,
+                rating_adjustment: ratingAdjustment,
             });
 
             showToast("Review Submitted & AI Report Generated", "success");

@@ -17,11 +17,7 @@ function Login() {
         }
         setLoading(true);
         try {
-            const formData = new FormData();
-            formData.append("email", email);
-            formData.append("password", password);
-
-            const response = await api.post("/login", formData);
+            const response = await api.post("/login", { email, password });
             const token = response.data.access_token;
             localStorage.setItem("token", token);
 

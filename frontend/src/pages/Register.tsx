@@ -33,14 +33,12 @@ function Register() {
 
         setLoading(true);
         try {
-            await api.post("/register", null, {
-                params: {
-                    name,
-                    email,
-                    password,
-                    role,
-                    invite_code: inviteCode,
-                },
+            await api.post("/register", {
+                name,
+                email,
+                password,
+                role,
+                invite_code: inviteCode,
             });
 
             showToast("User Registered Successfully", "success");

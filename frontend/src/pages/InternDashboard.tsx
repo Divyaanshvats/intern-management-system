@@ -43,11 +43,9 @@ function InternDashboard() {
         }
         setLoading(true);
         try {
-            await api.post("/submit-intern-feedback", null, {
-                params: {
-                    evaluation_id: evaluationId,
-                    comment: feedback,
-                },
+            await api.post("/submit-intern-feedback", {
+                evaluation_id: evaluationId,
+                comment: feedback,
             });
 
             showToast("Feedback Submitted Successfully", "success");

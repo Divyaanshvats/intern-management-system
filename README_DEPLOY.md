@@ -2,19 +2,10 @@
 
 Follow these steps to take your application live on Vercel.
 
-## Step 1: Set up a Cloud Database (Choose ONE)
-
-### Option A: Vercel Postgres (Easiest)
-1.  Go to your project in the **Vercel Dashboard**.
-2.  Click the **Storage** tab.
-3.  Click **Create Database** -> **Postgres**.
-4.  Once created, click **Connect** to your project.
-5.  Go to **Settings** -> **Environment Variables**. You will see `POSTGRES_URL`. **Copy this value**.
-
-### Option B: Supabase (Free alternative)
-1.  Go to [Supabase](https://supabase.com/).
-2.  Create a project -> **Project Settings** -> **Database**.
-3.  Copy the **URI** connection string.
+## Step 1: Set up a Cloud Database
+1.  Go to [Supabase](https://supabase.com/) (Free) or [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres).
+2.  Create a new project and copy your **Postgres Connection String** (Universal/URI format).
+    - It should look like: `postgres://user:password@host:5432/dbname`
 
 ## Step 2: Migrate Your Data
 1.  Open your terminal in the project folder.
