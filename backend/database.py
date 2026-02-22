@@ -2,6 +2,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import NullPool
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,11 +21,13 @@ else:
     if DATABASE_URL.startswith("postgres://"):
         DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
     
-    # Supabase pgbouncer=true causes issues with psycopg2 driver
-    if "?pgbouncer=true" in DATABASE_URL:
-        DATABASE_URL = DATABASE_URL.replace("?pgbouncer=true", "")
+    # Robustly remove ?pgbouncer=true or &pgbouncer=true which causes issues with psycopg2 logic
+    if "pgbouncer=true" in DATABASE_URL:
+        DATABASE_URL = DATABASE_URL.replace("?pgbouncer=true", "").replace("&pgbouncer=true", "")
         
-    engine = create_engine(DATABASE_URL)
+    # Use NullPool for Serverless (Vercel) to prevent intermittent connection errors
+    # This ensures a fresh connection for every request, avoiding stale pooling issues.
+    engine = create_engine(DATABASE_URL, poolclass=NullPool)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
