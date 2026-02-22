@@ -87,8 +87,10 @@ def get_db():
 def register(request: RegisterRequest, db: Session = Depends(get_db)):
     # Invite Code Check for privileged roles
     if request.role in ["manager", "hr"]:
-        actual_code = os.getenv("REGISTRATION_KEY", "ALGO8_2025") 
+        actual_code = os.getenv("REGISTRATION_KEY", "ALGO8_2024") 
+        print(f"DEBUG: Checking invite code for role {request.role}")
         if request.invite_code != actual_code:
+            print(f"DEBUG: Code mismatch! Expected length: {len(actual_code)}, Got length: {len(request.invite_code)}")
             raise HTTPException(status_code=401, detail="Invalid invite code for Manager/HR")
 
     if request.role not in ["manager", "intern", "hr"]:
