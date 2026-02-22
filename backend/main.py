@@ -45,7 +45,7 @@ class HRReviewRequest(BaseModel):
 
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -58,6 +58,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    print(f"🔥 GLOBAL ERROR: {exc}")
+    return HTTPException(status_code=500, detail=str(exc))
 
 def get_db():
     db = SessionLocal()
