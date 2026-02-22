@@ -43,9 +43,14 @@ class HRReviewRequest(BaseModel):
     comment: str
     rating_adjustment: int
 
-models.Base.metadata.create_all(bind=engine)
+# Avoid creating tables at top-level to prevent startup crashes if DB is slow
+# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(root_path="/api")
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok", "database": str(engine.url).split("@")[-1].split("/")[0]} # Masked DB host
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -65,6 +70,12 @@ async def global_exception_handler(request, exc):
     return HTTPException(status_code=500, detail=str(exc))
 
 def get_db():
+    # Attempt to create tables on first request if they don't exist
+    try:
+        models.Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        print(f"⚠️ Table creation failed (likely already exists or connecting): {e}")
+        
     db = SessionLocal()
     try:
         yield db
